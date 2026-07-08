@@ -10,6 +10,7 @@
 - pipeline / unroll / array_partition / dataflow
 - stream deadlock
 - Vitis HLS report 解释
+- HLS 优化资料和工具仓库阅读笔记
 
 不适合放：
 
@@ -24,3 +25,7 @@ YYYY-MM-DD-hls-core-concepts.md
 YYYY-MM-DD-pipeline-unroll-partition.md
 YYYY-MM-DD-dataflow-stream-deadlock.md
 ```
+
+## Current Notes
+
+- [hls-generator 资源笔记](2026-07-08-hls-generator-resource-note.md)
