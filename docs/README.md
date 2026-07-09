@@ -10,7 +10,7 @@
 ## Related Material Notes
 
 - [hls-generator 资源笔记](../materials/03_hls_basics/2026-07-08-hls-generator-resource-note.md)
-- [Hello Agents 到 LLM4HLS Track A 的映射笔记](../materials/04_agent_basics/2026-07-08-hello-agents-to-llm4hls-mapping.md)
+- [Datawhale Hello-Agents 到 LLM4HLS Track A 的映射笔记](../materials/04_agent_basics/2026-07-09-datawhale-hello-agents-to-llm4hls-mapping.md)
 
 ## Reading Path
 
@@ -19,7 +19,7 @@
 ```text
 1. Track A 0 基础入门手册
 2. hls-generator 资源笔记
-3. Hello Agents 映射笔记
+3. Datawhale Hello-Agents 映射笔记
 4. materials/README.md
 5. materials/02_harness/
 6. materials/03_hls_basics/

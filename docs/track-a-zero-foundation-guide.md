@@ -921,7 +921,8 @@ token 消耗是多少？
 - FPT 2026 Design Competition Track A: <https://fpt2026.uark.edu/fpt26-design-competition/>
 - Reference harness: <https://anonymous.4open.science/r/fpt26-harness/README.md>
 - hls-generator: <https://github.com/Eriemon/hls-generator>
-- Hello Agents: <https://helloagents.pro/#home>
+- Datawhale Hello-Agents: <https://hello-agents.datawhale.cc/#/./README>
+- Datawhale Hello-Agents GitHub: <https://github.com/datawhalechina/Hello-Agents>
 - DataLearner open-source leaderboard: <https://www.datalearner.com/leaderboards/open-source>
 - OpenRouter models API: <https://openrouter.ai/api/v1/models>
 - DeepSeek API docs: <https://api-docs.deepseek.com/>

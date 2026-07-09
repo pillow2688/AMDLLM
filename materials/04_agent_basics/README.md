@@ -27,4 +27,4 @@ YYYY-MM-DD-budget-policy-design.md
 
 ## Current Notes
 
-- [Hello Agents 到 LLM4HLS Track A 的映射笔记](2026-07-08-hello-agents-to-llm4hls-mapping.md)
+- [Datawhale Hello-Agents 到 LLM4HLS Track A 的映射笔记](2026-07-09-datawhale-hello-agents-to-llm4hls-mapping.md)

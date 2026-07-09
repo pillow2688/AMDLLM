@@ -37,7 +37,7 @@ runs/       HLS/agent 运行输出
 ## Current Key Materials
 
 - [Track A 0 基础入门手册](docs/track-a-zero-foundation-guide.md)
-- [Hello Agents 到 LLM4HLS Track A 的映射笔记](materials/04_agent_basics/2026-07-08-hello-agents-to-llm4hls-mapping.md)
+- [Datawhale Hello-Agents 到 LLM4HLS Track A 的映射笔记](materials/04_agent_basics/2026-07-09-datawhale-hello-agents-to-llm4hls-mapping.md)
 - [hls-generator 资源笔记](materials/03_hls_basics/2026-07-08-hls-generator-resource-note.md)
 
 ## Team Rules
@@ -54,4 +54,5 @@ runs/       HLS/agent 运行输出
 - FPT 2026 Design Competition: <https://fpt2026.uark.edu/fpt26-design-competition/>
 - FPT26 harness: <https://anonymous.4open.science/r/fpt26-harness/README.md>
 - hls-generator: <https://github.com/Eriemon/hls-generator>
-- Hello Agents: <https://helloagents.pro/#home>
+- Datawhale Hello-Agents: <https://hello-agents.datawhale.cc/#/./README>
+- Datawhale Hello-Agents GitHub: <https://github.com/datawhalechina/Hello-Agents>
