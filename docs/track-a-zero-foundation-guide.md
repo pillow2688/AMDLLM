@@ -1,8 +1,11 @@
 # FPT 2026 Track A / LLM4HLS 0 基础入门笔记
 
 整理时间：2026-07-07  
+最近校准：2026-07-10<br>
 适用对象：第一次接触 FPGA、HLS、Agent 的队友  
 目标：先看懂比赛在做什么，再知道一个月内该优先学什么、做什么。
+
+规则边界：官网决定正式要求；`fpt26-harness` 是当前可运行的 reference implementation，其中的 credits、样例预算和评分公式不等于最终正式规则。比赛全貌先读[《Track A 比赛总览》](track-a-competition-overview.md)。
 
 ---
 
@@ -59,7 +62,7 @@ Agent     负责调度 LLM 和工具，并控制预算
 
 ## 3. Harness 是什么
 
-官方给的 harness 不是“正式提交模板那么简单”，而是：
+当前 reference harness 不是“正式提交模板那么简单”，而是：
 
 > 一个 Track A 的参考 agent + 评测 harness。
 
@@ -78,7 +81,8 @@ task package
 
 - 它只是示例实现，不是必须完全照抄。
 - 参赛者可以实现自己的 agent 和 harness。
-- 但它已经给出了比赛最核心的接口、预算、评分方式。
+- 它给出了可运行的接口、样例预算和样例评分方式，适合开发与对比实验。
+- 正式任务可能采用各工具调用上限，也可能采用统一 credits，最终细则仍以官网和后续 FAQ 为准。
 - 一个月时间紧，建议先基于它增强，而不是重做大框架。
 
 ---
@@ -485,9 +489,19 @@ scripts/run_poc.py
 
 ---
 
-## 13. 为什么先学手写 loop，而不是 LangChain
+## 13. 为什么先学手写 loop，再决定是否引入 LangGraph
 
-LangChain、LangGraph、AutoGen、CrewAI 都能做 agent，但这场比赛先不建议从框架入手。
+LangChain、LangGraph、AutoGen、CrewAI 都能做 Agent。这里先学手写 loop，不是因为 LangGraph 不适合比赛，而是因为初学者需要先看清状态、工具、预算和回滚到底如何工作。
+
+当前 LangChain 官方文档明确说明：
+
+```text
+LangChain create_agent：较高层 Agent harness
+LangGraph：较低层 stateful orchestration
+LangChain Agent 本身构建在 LangGraph 上
+```
+
+所以它们不是互斥路线。
 
 原因：
 
@@ -517,7 +531,7 @@ latency 降了吗?
 hidden test pass?
 ```
 
-### 3. 框架不懂 HLS
+### 3. 框架不会自动补上 HLS 策略
 
 框架不会天然知道：
 
@@ -542,21 +556,27 @@ HLS 工具链
 
 学习负担太重。
 
-更稳路线：
+建议路线：
 
 ```text
 先吃透 reference agent 的 Python loop
 再增强日志解析、预算策略、prompt、优化策略
-最后再决定是否引入框架
+当状态、分支、回滚变复杂时，再决定是否用 LangGraph 表达同一闭环
 ```
+
+Track A 适合“确定性外层 + 动态智能内层”：LLM 提出诊断与动作，普通 Python 或 LangGraph 负责预算、验证等级和 best-code 不变量。
 
 ---
 
-## 14. LangChain 那类框架是什么意思
+## 14. LangChain 和 LangGraph 分别做什么
 
 LangChain 可以理解成：
 
-> 把 LLM、prompt、工具、记忆、检索、输出格式、agent loop 串起来的 Python 框架。
+> 提供模型、prompt、tool、structured output、middleware 和 `create_agent` 等较高层组件。
+
+LangGraph 可以理解成：
+
+> 用共享 State、Node 和条件边表达长时间、有分支、可循环、可恢复的 Agent workflow。
 
 不用 LangChain：
 
@@ -567,40 +587,39 @@ if result.ok:
     ...
 ```
 
-用 LangChain：
+用 LangChain/LangGraph 后，可以把流程表达成：
 
 ```text
-LLM
-PromptTemplate
-Tool(csim)
-Tool(synth)
-Tool(cosim)
-AgentExecutor
+Analyzer → Action Proposal → Budget Gate
+                               ↓
+                       csim / synth / cosim
+                               ↓
+Reflector ← Tool Result ← Candidate Manager
 ```
 
-它能让 LLM 选择工具并调用。
-
-但比赛里要小心：
+比赛里要小心的不是“能不能用框架”，而是工具权限边界：
 
 ```text
-LangChain 能帮你操作工具
-但不会自动帮你省 cosim 预算
-也不会自动理解 HLS 失败类型
+模型可以看到预算和全部工具结果，并提出下一动作
+确定性 gate 检查费用、预留、重复调用和验证等级
+工具真实执行后，结果再交给模型 Reflection
 ```
 
 所以推荐：
 
 ```text
-前期：不用 LangChain
-中期：可以借用 prompt/template/output parser/tracing
-后期：流程复杂后再考虑 LangGraph
+前期：吃透 reference Python loop
+中期：显式化 State、failure classifier、candidate manager 和 budget policy
+后期：如果分支复杂，用 LangGraph 组织外层，保留 ToolServer 作为评测边界
 ```
+
+专题说明见[《LangGraph 与 Track A 混合 Agent 架构》](../materials/04_agent_basics/2026-07-10-langgraph-track-a-architecture.md)。
 
 ---
 
 ## 15. OpenRouter 和开源模型要求
 
-比赛材料写的是：
+当前 reference harness README 写的是：
 
 ```text
 LLM provider: OpenRouter, open-source models only
@@ -617,16 +636,6 @@ API 服务开放调用 ≠ 模型开源
 模型权重/许可证开放 = 比赛更可能合规
 ```
 
-例如：
-
-```text
-Provider: OpenRouter
-Model: deepseek-ai/DeepSeek-V4-Pro
-License: MIT
-```
-
-这种写法比只写 `DeepSeek` 更清楚。
-
 最终提交时要写清楚：
 
 - exact model id / slug
@@ -634,6 +643,8 @@ License: MIT
 - license
 - token consumption
 - 是否使用搜索/外部工具
+
+模型是否满足最终比赛要求，还要等待 FAQ 或组织者进一步说明；不能只凭 API 名称推断权重和 license。
 
 ---
 
@@ -661,7 +672,7 @@ Fusion：用于学习、分析、头脑风暴
 
 ## 17. 模型选择的初步方向
 
-模型排名变化很快，以下只作为 2026-07-07 对话阶段的候选方向，最终提交前必须复查。
+模型排名、provider 和 slug 变化很快，所以长期指南只保留选择原则。当前候选和 DeepSeek API 版本快照见[《开放模型选择快照》](../materials/05_models_and_apis/2026-07-10-open-model-selection-snapshot.md)。
 
 优先关注榜单指标：
 
@@ -671,13 +682,6 @@ Aider：代码编辑能力
 Terminal-Bench：命令行/工具环境能力
 tau2 / tool-use 类指标：多步工具调用能力
 ```
-
-候选模型方向：
-
-- DeepSeek V4 Pro / V4 Flash
-- Kimi K2 系列
-- GLM-4.5 / GLM-5 系列
-- Qwen Coder / Qwen3.x 系列
 
 注意：
 
@@ -717,12 +721,7 @@ tau2 / tool-use 类指标：多步工具调用能力
 - 实验室服务器
 - 远程开发机
 
-当前 Windows 本机环境检查结论：
-
-- Docker 命令存在，但 daemon/权限未确认
-- WSL 存在，但没有默认 distro
-- Vitis / `vitis-run` 不在 PATH
-- 当前不能直接跑官方 HLS loop
+本机安装状态会变化，不写成长期事实。2026-07-10 的实测结果见[《本机环境快照》](../materials/06_environment/2026-07-10-local-environment-snapshot.md)。
 
 所以技术第一优先级是：
 
@@ -852,9 +851,12 @@ token 消耗是多少？
 ```text
 先 csim 多试几次
 功能正确后再 synth
-只有 stream/dataflow 风险高时才 cosim
-预算低时停止优化
+requires_cosim 或 stream/dataflow 风险高时安排 cosim
+先预留必要的最终验证预算，再决定还能尝试几轮
+继续探索的预期价值不足时，返回 best_verified_code
 ```
+
+详细策略见[《预算感知工具策略与最优停止》](../materials/04_agent_basics/2026-07-10-budget-aware-tool-policy-and-optimal-stopping.md)。
 
 ### 3. Prompt templates
 
@@ -868,7 +870,7 @@ token 消耗是多少？
 降低资源 prompt
 ```
 
-### 4. Best-code memory
+### 4. Best-code memory 与 candidate manager
 
 永远保存：
 
@@ -876,6 +878,8 @@ token 消耗是多少？
 - 最低 latency 代码
 - cosim verified 代码
 - 失败候选和失败原因
+
+任何预算耗尽、超时或异常都必须返回 `best_verified_code`，不能返回最后生成但未验证的代码。
 
 ### 5. HLS optimization library
 
@@ -907,7 +911,8 @@ token 消耗是多少？
 7. 读 _reach_correctness()
 8. 读 _optimize()
 9. 再补 HLS 的 pipeline/unroll/partition
-10. 最后再看 LangChain/LangGraph/AutoGen
+10. 读 LangGraph 混合架构和预算策略专题
+11. 最后再看 AutoGen、多 Agent 等扩展路线
 ```
 
 一句话：
@@ -922,13 +927,18 @@ token 消耗是多少？
 - Reference harness: <https://anonymous.4open.science/r/fpt26-harness/README.md>
 - hls-generator: <https://github.com/Eriemon/hls-generator>
 - Datawhale Hello-Agents: <https://hello-agents.datawhale.cc/#/./README>
-- Datawhale Hello-Agents GitHub: <https://github.com/datawhalechina/Hello-Agents>
+- Datawhale Hello-Agents GitHub: <https://github.com/datawhalechina/hello-agents>
 - DataLearner open-source leaderboard: <https://www.datalearner.com/leaderboards/open-source>
 - OpenRouter models API: <https://openrouter.ai/api/v1/models>
 - DeepSeek API docs: <https://api-docs.deepseek.com/>
 - LangGraph docs: <https://docs.langchain.com/oss/python/langgraph/overview>
 - AutoGen docs: <https://microsoft.github.io/autogen/stable/>
 - CrewAI docs: <https://docs.crewai.com/>
+- [Track A 比赛总览](track-a-competition-overview.md)
+- [官方规则快照](../materials/01_official/2026-07-10-track-a-official-summary.md)
+- [Reference harness 分析](../materials/02_harness/2026-07-10-reference-harness-analysis.md)
+- [LangGraph 混合架构](../materials/04_agent_basics/2026-07-10-langgraph-track-a-architecture.md)
+- [预算感知工具策略与最优停止](../materials/04_agent_basics/2026-07-10-budget-aware-tool-policy-and-optimal-stopping.md)
 
 ---
 
@@ -944,4 +954,4 @@ token 消耗是多少？
 
 第三句：
 
-> 一个月内最稳的路线是基于官方 harness 改强 reference agent，而不是一开始追复杂 agent 框架。
+> 一个月内先基于 reference harness 建立可靠闭环，再根据状态复杂度选择普通 Python 或 LangGraph；框架不是目标，预算内的正确性和最终质量才是目标。

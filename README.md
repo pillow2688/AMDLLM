@@ -4,11 +4,12 @@
 
 ## Start Here
 
-新队友先读这三份：
+新队友先读这四份：
 
-1. [文档入口](docs/README.md)
+1. [Track A 比赛总览](docs/track-a-competition-overview.md)
 2. [Track A 0 基础入门手册](docs/track-a-zero-foundation-guide.md)
-3. [资料库目录规则](materials/README.md)
+3. [文档入口](docs/README.md)
+4. [资料库目录规则](materials/README.md)
 
 然后按主题继续读：
 
@@ -36,7 +37,12 @@ runs/       HLS/agent 运行输出
 
 ## Current Key Materials
 
+- [Track A 比赛总览](docs/track-a-competition-overview.md)
 - [Track A 0 基础入门手册](docs/track-a-zero-foundation-guide.md)
+- [官方规则快照](materials/01_official/2026-07-10-track-a-official-summary.md)
+- [Reference harness 分析](materials/02_harness/2026-07-10-reference-harness-analysis.md)
+- [LangGraph 与 Track A 混合 Agent 架构](materials/04_agent_basics/2026-07-10-langgraph-track-a-architecture.md)
+- [预算感知工具策略与最优停止](materials/04_agent_basics/2026-07-10-budget-aware-tool-policy-and-optimal-stopping.md)
 - [Datawhale Hello-Agents 到 LLM4HLS Track A 的映射笔记](materials/04_agent_basics/2026-07-09-datawhale-hello-agents-to-llm4hls-mapping.md)
 - [hls-generator 资源笔记](materials/03_hls_basics/2026-07-08-hls-generator-resource-note.md)
 
@@ -48,6 +54,7 @@ runs/       HLS/agent 运行输出
 4. 模型/API 相关资料必须写清楚来源、检查日期和 license 风险。
 5. 实验记录必须使用 `materials/_templates/experiment-log-template.md`。
 6. 不提交 API key、license server 信息、私有服务器密码。
+7. 文档必须区分官方规则、reference harness 实现和团队设计判断。
 
 ## Upstream References
 
@@ -55,4 +62,4 @@ runs/       HLS/agent 运行输出
 - FPT26 harness: <https://anonymous.4open.science/r/fpt26-harness/README.md>
 - hls-generator: <https://github.com/Eriemon/hls-generator>
 - Datawhale Hello-Agents: <https://hello-agents.datawhale.cc/#/./README>
-- Datawhale Hello-Agents GitHub: <https://github.com/datawhalechina/Hello-Agents>
+- Datawhale Hello-Agents GitHub: <https://github.com/datawhalechina/hello-agents>

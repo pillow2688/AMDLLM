@@ -23,3 +23,7 @@ YYYY-MM-DD-agent-py-reading.md
 YYYY-MM-DD-toolserver-budget-notes.md
 YYYY-MM-DD-sample-task-run-log-summary.md
 ```
+
+## Current Notes
+
+- [2026-07-10 FPT26 Reference Harness 分析](2026-07-10-reference-harness-analysis.md)

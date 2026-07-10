@@ -2,9 +2,9 @@
 
 Status: verified  
 Owner: team  
-Checked: 2026-07-09  
+Checked: 2026-07-10
 Source: https://hello-agents.datawhale.cc/#/./README  
-GitHub: https://github.com/datawhalechina/Hello-Agents  
+GitHub: https://github.com/datawhalechina/hello-agents
 Expires/Risk: medium
 
 ## Why This Matters
@@ -24,7 +24,7 @@ Online docs:
   https://hello-agents.datawhale.cc/#/./README
 
 GitHub:
-  https://github.com/datawhalechina/Hello-Agents
+  https://github.com/datawhalechina/hello-agents
 ```
 
 后续资料里提到 Hello-Agents 时，优先引用 Datawhale 版本。
@@ -97,7 +97,7 @@ Track A 首要问题是工具反馈闭环和预算控制
 | ReAct | 思考-行动-观察循环 | 分析日志 → 改代码 → 跑工具 → 再分析 |
 | Plan-and-Solve | 先规划再执行 | 先修正确性，再优化 PPA |
 | Reflection | 反思失败并改进 | 根据 compile/runtime/synth/cosim 失败日志修正策略 |
-| Framework | 组织 agent 运行结构 | 当前是自写 Python loop，后期可考虑 LangGraph |
+| Framework | 组织 agent 运行结构 | 当前是自写 Python loop，也可用 LangGraph 表达混合状态机 |
 | Evaluation | 衡量 agent 能力 | hidden test、synth、cosim、score、token、credit |
 
 ## ReAct In Track A
@@ -122,13 +122,13 @@ Repeat:
 注意：
 
 ```text
-不要让 LLM 完全自由调用工具
-cosim 太贵，必须由外层 budget policy 控制
+LLM 可以看到预算和工具结果并提出动作
+昂贵工具必须经过确定性的 budget/reserve gate
 ```
 
 ## Plan-And-Solve In Track A
 
-Track A 的高层计划几乎是固定的：
+Track A 的安全边界较固定，但具体修复和优化路径可以动态分支：
 
 ```text
 1. Load task
@@ -138,16 +138,17 @@ Track A 的高层计划几乎是固定的：
 5. Optimize candidate code
 6. Verify each candidate by csim + synth
 7. Accept only if better
-8. Stop on no improvement, round cap, or budget exhaustion
+8. 根据新假设价值、验证预留、轮数和预算决定继续或停止
 9. Return best verified kernel
 ```
 
-这说明我们不需要先做“完全自由的 Agent”。  
-我们应该先做可控 workflow，再把 LLM 放在关键智能节点。
+这说明我们不需要“完全自由的 Agent”，也不应把 workflow 理解成一条固定直线。
+
+更合适的是确定性边界内的动态 Agent：LLM 决定诊断和策略，状态机保证预算、验证与回滚。
 
 ## Reflection In Track A
 
-Reflection 最适合变成我们的 failure classifier。
+Reflection 最适合做成 Tool-Grounded Reflection：failure classifier 是第一步，后续还要根据真实工具结果形成新假设、生成候选并判断是否接受。
 
 失败类型和反思方向：
 
@@ -192,7 +193,8 @@ Dify / Coze / n8n:
   了解即可，不适合作为 Track A 主体。
 
 LangGraph:
-  后期如果状态机复杂，可以考虑。
+  官方定位是组合 deterministic workflow 与 agentic decision 的底层编排框架。
+  Track A 很适合这种混合模式，但应先理解 reference loop 再迁移。
 
 AutoGen / AgentScope:
   适合多 agent 分工，但不是第 1 优先级。
@@ -221,8 +223,10 @@ AutoGen / AgentScope:
 中期：
 
 - 把 Reflection 变成 failure classifier。
-- 把 Plan-and-Solve 变成稳定 workflow。
+- 把 Reflection 扩展成基于工具证据的诊断与新假设生成。
+- 把 Plan-and-Solve 变成带条件分支、预算预留和回滚的稳定 workflow。
 - 把 ReAct 思路用于日志分析和候选代码迭代。
+- 对照阅读本仓库的 LangGraph 架构和最优停止专题。
 
 不做：
 

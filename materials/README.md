@@ -36,6 +36,7 @@ materials/
 
 ## 当前成品文档
 
+- [Track A 比赛总览](../docs/track-a-competition-overview.md)
 - [Track A 0 基础入门手册](../docs/track-a-zero-foundation-guide.md)
 
 ## 资料状态标记

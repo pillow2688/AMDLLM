@@ -23,3 +23,7 @@ YYYY-MM-DD-local-env-check.md
 YYYY-MM-DD-vitis-server-setup.md
 YYYY-MM-DD-docker-wsl-notes.md
 ```
+
+## Current Notes
+
+- [2026-07-10 本机环境快照](2026-07-10-local-environment-snapshot.md)

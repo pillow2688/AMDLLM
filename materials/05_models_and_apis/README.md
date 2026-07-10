@@ -23,3 +23,7 @@ YYYY-MM-DD-open-model-shortlist.md
 YYYY-MM-DD-openrouter-model-slugs.md
 YYYY-MM-DD-model-license-evidence.md
 ```
+
+## Current Notes
+
+- [2026-07-10 开放模型选择快照](2026-07-10-open-model-selection-snapshot.md)

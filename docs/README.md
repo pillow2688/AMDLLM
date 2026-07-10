@@ -5,10 +5,15 @@
 
 ## Must Read
 
-1. [Track A 0 基础入门手册](track-a-zero-foundation-guide.md)
+1. [Track A 比赛总览](track-a-competition-overview.md)
+2. [Track A 0 基础入门手册](track-a-zero-foundation-guide.md)
 
 ## Related Material Notes
 
+- [官方规则快照](../materials/01_official/2026-07-10-track-a-official-summary.md)
+- [Reference harness 分析](../materials/02_harness/2026-07-10-reference-harness-analysis.md)
+- [LangGraph 与 Track A 混合 Agent 架构](../materials/04_agent_basics/2026-07-10-langgraph-track-a-architecture.md)
+- [预算感知工具策略与最优停止](../materials/04_agent_basics/2026-07-10-budget-aware-tool-policy-and-optimal-stopping.md)
 - [hls-generator 资源笔记](../materials/03_hls_basics/2026-07-08-hls-generator-resource-note.md)
 - [Datawhale Hello-Agents 到 LLM4HLS Track A 的映射笔记](../materials/04_agent_basics/2026-07-09-datawhale-hello-agents-to-llm4hls-mapping.md)
 
@@ -17,11 +22,12 @@
 建议新队友按这个顺序读：
 
 ```text
-1. Track A 0 基础入门手册
-2. hls-generator 资源笔记
-3. Datawhale Hello-Agents 映射笔记
-4. materials/README.md
-5. materials/02_harness/
-6. materials/03_hls_basics/
-7. materials/04_agent_basics/
+1. Track A 比赛总览
+2. Track A 0 基础入门手册
+3. 官方规则快照和 reference harness 分析
+4. hls-generator 资源笔记
+5. Datawhale Hello-Agents 映射笔记
+6. LangGraph 混合架构和预算停止策略
+7. materials/README.md
+8. 按需进入 HLS、环境、模型和实验目录
 ```
