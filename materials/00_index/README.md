@@ -15,6 +15,13 @@
 9. `07_experiments/`：记录模型和 Agent 实验
 10. `08_paper_and_demo/`：沉淀论文和 demo 材料
 
+## Agent 专题阅读顺序
+
+1. [Datawhale Hello-Agents 到 Track A 的映射](../04_agent_basics/2026-07-09-datawhale-hello-agents-to-llm4hls-mapping.md)：先建立 Agent 通用概念
+2. [LangChain v1 到 Track A 的映射](../04_agent_basics/2026-07-10-langchain-v1-track-a-mapping.md)：理解 `create_agent`、middleware 和 LangGraph 的关系
+3. [LangGraph 与 Track A 混合 Agent 架构](../04_agent_basics/2026-07-10-langgraph-track-a-architecture.md)：理解团队推荐架构
+4. [预算感知工具策略与最优停止](../04_agent_basics/2026-07-10-budget-aware-tool-policy-and-optimal-stopping.md)：进入比赛的核心决策问题
+
 ## 待归类资料
 
 如果不确定某份资料该放哪里，先在 `triage.md` 记录，不要直接堆到根目录。

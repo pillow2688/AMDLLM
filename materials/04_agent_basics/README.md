@@ -28,5 +28,6 @@ YYYY-MM-DD-budget-policy-design.md
 ## Current Notes
 
 - [Datawhale Hello-Agents 到 LLM4HLS Track A 的映射笔记](2026-07-09-datawhale-hello-agents-to-llm4hls-mapping.md)
+- [LangChain v1 到 LLM4HLS Track A 的映射](2026-07-10-langchain-v1-track-a-mapping.md)
 - [LangGraph 与 Track A 混合 Agent 架构](2026-07-10-langgraph-track-a-architecture.md)
 - [预算感知工具策略与最优停止](2026-07-10-budget-aware-tool-policy-and-optimal-stopping.md)

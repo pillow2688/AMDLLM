@@ -7,6 +7,7 @@ Checked: 2026-07-10
 Sources:
 
 - https://docs.langchain.com/oss/python/langchain/overview
+- https://docs.langchain.com/oss/python/releases/langchain-v1
 - https://docs.langchain.com/oss/python/langgraph/overview
 - https://docs.langchain.com/oss/python/langgraph/workflows-agents
 - https://docs.langchain.com/oss/python/langchain/middleware/overview
@@ -21,6 +22,8 @@ LangChain 和 LangGraph 不是互斥的两条路线。
 - LangChain `create_agent`：较高层、可配置的 Agent harness；
 - LangGraph：较低层的 stateful orchestration framework；
 - LangChain Agent 本身构建在 LangGraph 上；
+- LangChain v1 已用 `create_agent` 取代旧教程中的 `langgraph.prebuilt.create_react_agent` 作为标准高层入口；
+- middleware 不是另一套运行时，它的 hooks 会在 `create_agent` 编译出的 LangGraph 内执行；
 - LangGraph 适合组合 deterministic workflow 与 agentic decision；
 - evaluator-optimizer 是 LangGraph 官方列出的常见模式。
 
@@ -51,6 +54,25 @@ Continue Or Stop
 ```
 
 模型负责提出策略，规则层负责保证动作合法，工具负责提供事实。
+
+## 职责应该放在哪一层
+
+LangChain v1 的 middleware 很适合实现横切控制，但不能把所有比赛状态都塞进去。
+
+| 层 | 适合承担的职责 | 不应单独承担的职责 |
+| --- | --- | --- |
+| Prompt | HLS 背景、当前任务、工具使用说明 | 预算硬限制、最终候选安全性 |
+| Structured action | 动作、候选、假设、预期收益和风险 | 自己批准自己的费用 |
+| `before_model` / `after_model` | 注入状态、裁剪上下文、校验模型输出 | 跨阶段 candidate 生命周期 |
+| `wrap_tool_call` | 单次扣费检查、重复拦截、缓存、异常归一化 | 全局 repair/optimize/stop 路由 |
+| Python state / StateGraph | 阶段、分支、预算总账、验证等级、停止条件 | HLS 优化内容的创造性判断 |
+| Candidate manager | `best_verified_code`、接受、拒绝、回滚 | 自由生成新代码 |
+
+建议把 middleware 看成局部执行护栏，把 Python state machine 或 LangGraph 看成全局控制平面。无论最终是否使用框架，都只能有一个权威预算总账和一个权威 best candidate。
+
+如果工具由外层 graph node 调用，`create_agent` 的 `wrap_tool_call` 不会拦截它。预算规则应封装成共享 policy，让 middleware 和外层工具节点调用同一份实现。
+
+更完整的 v1 概念映射见 [LangChain v1 到 LLM4HLS Track A 的映射](2026-07-10-langchain-v1-track-a-mapping.md)。
 
 ## 建议 State
 
@@ -113,7 +135,7 @@ cosim_verified
 - 最大 token、时间和轮数；
 - 返回代码时必须选择已知最优的已验证版本。
 
-这些约束可以放在 LangGraph node、conditional edge 或自定义 middleware 中，不能只写在 prompt 里。
+单次工具调用约束可以放在自定义 middleware 中；跨轮次预算、候选和停止不变量更适合放在 LangGraph node、conditional edge 或普通 Python 状态层。无论放在哪里，都不能只写在 prompt 里。
 
 ## Reflection 如何落地
 

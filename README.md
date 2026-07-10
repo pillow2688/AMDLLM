@@ -41,6 +41,7 @@ runs/       HLS/agent 运行输出
 - [Track A 0 基础入门手册](docs/track-a-zero-foundation-guide.md)
 - [官方规则快照](materials/01_official/2026-07-10-track-a-official-summary.md)
 - [Reference harness 分析](materials/02_harness/2026-07-10-reference-harness-analysis.md)
+- [LangChain v1 到 Track A 的映射](materials/04_agent_basics/2026-07-10-langchain-v1-track-a-mapping.md)
 - [LangGraph 与 Track A 混合 Agent 架构](materials/04_agent_basics/2026-07-10-langgraph-track-a-architecture.md)
 - [预算感知工具策略与最优停止](materials/04_agent_basics/2026-07-10-budget-aware-tool-policy-and-optimal-stopping.md)
 - [Datawhale Hello-Agents 到 LLM4HLS Track A 的映射笔记](materials/04_agent_basics/2026-07-09-datawhale-hello-agents-to-llm4hls-mapping.md)
