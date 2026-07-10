@@ -15,6 +15,13 @@
 9. `07_experiments/`：记录模型和 Agent 实验
 10. `08_paper_and_demo/`：沉淀论文和 demo 材料
 
+## 最新提交要求
+
+- [Track-A Submission Guidelines 中文翻译与执行清单](../01_official/2026-07-10-track-a-submission-guidelines-zh.md)
+- [FPT 2026 Track A 官方规则快照](../01_official/2026-07-10-track-a-official-summary.md)
+- [开放模型选择快照](../05_models_and_apis/2026-07-10-open-model-selection-snapshot.md)
+- [本机环境快照](../06_environment/2026-07-10-local-environment-snapshot.md)
+
 ## Agent 专题阅读顺序
 
 1. [Datawhale Hello-Agents 到 Track A 的映射](../04_agent_basics/2026-07-09-datawhale-hello-agents-to-llm4hls-mapping.md)：先建立 Agent 通用概念

@@ -344,9 +344,9 @@ LUT 是 FPGA 上的通用逻辑资源。
 
 ### clock 过不了
 
-目标是 5 ns，也就是 200 MHz。
+补充提交指南要求最终硬件至少达到 100 MHz，也就是 clock period 不高于 10 ns。当前 reference harness 的样例目标更严格，是 5 ns，也就是 200 MHz。
 
-如果一条组合逻辑路径太长，就无法在 5 ns 内完成。
+如果一条组合逻辑路径太长，就无法在目标周期内完成。具体实验应读取 task package 的 clock 约束，并同时报告 target clock 和 synthesis estimated clock。
 
 ### synth 失败
 
@@ -625,7 +625,7 @@ Reflector ← Tool Result ← Candidate Manager
 LLM provider: OpenRouter, open-source models only
 ```
 
-意思是：
+这说明 reference implementation 可以：
 
 > 可以通过 OpenRouter API 调模型，但模型本身必须是开源/开放权重模型。
 
@@ -644,7 +644,7 @@ API 服务开放调用 ≠ 模型开源
 - token consumption
 - 是否使用搜索/外部工具
 
-模型是否满足最终比赛要求，还要等待 FAQ 或组织者进一步说明；不能只凭 API 名称推断权重和 license。
+团队收到的补充提交指南推荐比较三个具体 open-weight 模型，但没有说明最终提交必须本地部署，还是允许继续通过 OpenRouter 等 API 调用。这个问题仍需组织者确认。不能只凭 API 名称推断权重、revision 和 license。
 
 ---
 
@@ -673,6 +673,16 @@ Fusion：用于学习、分析、头脑风暴
 ## 17. 模型选择的初步方向
 
 模型排名、provider 和 slug 变化很快，所以长期指南只保留选择原则。当前候选和 DeepSeek API 版本快照见[《开放模型选择快照》](../materials/05_models_and_apis/2026-07-10-open-model-selection-snapshot.md)。
+
+当前补充提交指南推荐优先报告以下三种模型的对比实验：
+
+```text
+deepseek-ai/DeepSeek-V4-Pro
+cyankiwi/Qwen3.5-122B-A10B-AWQ-4bit
+Qwen/Qwen3.6-27B-FP8
+```
+
+它们是推荐对比组，不是唯一允许的模型；额外候选应是公开可用的 open-weight 基础模型或微调版本。
 
 优先关注榜单指标：
 
@@ -713,6 +723,8 @@ tau2 / tool-use 类指标：多步工具调用能力
 
 这些是软件工具链完成的。
 
+补充提交指南要求 5 分钟视频展示项目在 target platform 上运行，但没有明确这是否要求团队拥有实体 U55C 板卡，还是展示 U55C/Vitis 2025.2 co-simulation 环境即可。主要开发仍可先依赖软件工具链，最终视频的平台解释应向组织者确认。
+
 但需要一个能跑 Vitis 2025.2 的环境，通常是：
 
 - Linux
@@ -749,10 +761,14 @@ tau2 / tool-use 类指标：多步工具调用能力
 ```text
 functional pass
 synthesizable pass
+cosim pass
+frequency >= 100 MHz
 latency 有改善
 score 提高
 budget 没爆
 ```
+
+提交层面还要做到 Docker 可复现、实验报告完整、三种推荐模型有对比结果，并准备最长 5 分钟的实际运行视频。
 
 ---
 
@@ -764,6 +780,7 @@ budget 没爆
 
 - 确认报名和规则
 - 搭 Vitis 2025.2 环境
+- 确认 Alveo U55C part、clock 和 Docker 复现方式
 - 跑通 reference harness
 - 跑 `projection_bugfix` 和 `dotProduct_optimize`
 - 读懂 `agent.py` 的主流程
@@ -806,10 +823,12 @@ budget 没爆
 目标：
 
 - 多模型对比
+- 完成三种推荐模型的统一对比矩阵
 - 多策略对比
 - budget policy 对比
 - 写 2 页主文档
-- 准备 demo 和答辩材料
+- 准备 experimental report、Docker 复现包和 5 分钟 demo video
+- 准备入围后的现场答辩材料
 
 论文要能回答：
 
@@ -936,6 +955,7 @@ requires_cosim 或 stream/dataflow 风险高时安排 cosim
 - CrewAI docs: <https://docs.crewai.com/>
 - [Track A 比赛总览](track-a-competition-overview.md)
 - [官方规则快照](../materials/01_official/2026-07-10-track-a-official-summary.md)
+- [Track-A Submission Guidelines 中文翻译与执行清单](../materials/01_official/2026-07-10-track-a-submission-guidelines-zh.md)
 - [Reference harness 分析](../materials/02_harness/2026-07-10-reference-harness-analysis.md)
 - [LangGraph 混合架构](../materials/04_agent_basics/2026-07-10-langgraph-track-a-architecture.md)
 - [预算感知工具策略与最优停止](../materials/04_agent_basics/2026-07-10-budget-aware-tool-policy-and-optimal-stopping.md)

@@ -11,6 +11,7 @@
 ## Related Material Notes
 
 - [官方规则快照](../materials/01_official/2026-07-10-track-a-official-summary.md)
+- [Track-A Submission Guidelines 中文翻译与执行清单](../materials/01_official/2026-07-10-track-a-submission-guidelines-zh.md)
 - [Reference harness 分析](../materials/02_harness/2026-07-10-reference-harness-analysis.md)
 - [LangGraph 与 Track A 混合 Agent 架构](../materials/04_agent_basics/2026-07-10-langgraph-track-a-architecture.md)
 - [预算感知工具策略与最优停止](../materials/04_agent_basics/2026-07-10-budget-aware-tool-policy-and-optimal-stopping.md)
@@ -24,10 +25,11 @@
 ```text
 1. Track A 比赛总览
 2. Track A 0 基础入门手册
-3. 官方规则快照和 reference harness 分析
-4. hls-generator 资源笔记
-5. Datawhale Hello-Agents 映射笔记
-6. LangGraph 混合架构和预算停止策略
-7. materials/README.md
-8. 按需进入 HLS、环境、模型和实验目录
+3. 官方规则快照和 Track-A Submission Guidelines
+4. reference harness 分析
+5. hls-generator 资源笔记
+6. Datawhale Hello-Agents 映射笔记
+7. LangGraph 混合架构和预算停止策略
+8. materials/README.md
+9. 按需进入 HLS、环境、模型和实验目录
 ```

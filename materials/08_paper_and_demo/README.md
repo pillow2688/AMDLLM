@@ -24,3 +24,9 @@ YYYY-MM-DD-paper-outline.md
 YYYY-MM-DD-token-consumption-table.md
 YYYY-MM-DD-demo-script.md
 ```
+
+## Current Guidance
+
+- [Track-A Submission Guidelines 中文翻译与执行清单](../01_official/2026-07-10-track-a-submission-guidelines-zh.md)
+
+当前提交准备至少覆盖：experimental report、各阶段 token consumption、三种推荐模型对比、Docker 复现包，以及最长 5 分钟的 target-platform demonstration video。

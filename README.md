@@ -40,6 +40,7 @@ runs/       HLS/agent 运行输出
 - [Track A 比赛总览](docs/track-a-competition-overview.md)
 - [Track A 0 基础入门手册](docs/track-a-zero-foundation-guide.md)
 - [官方规则快照](materials/01_official/2026-07-10-track-a-official-summary.md)
+- [Track-A Submission Guidelines 中文翻译与执行清单](materials/01_official/2026-07-10-track-a-submission-guidelines-zh.md)
 - [Reference harness 分析](materials/02_harness/2026-07-10-reference-harness-analysis.md)
 - [LangChain v1 到 Track A 的映射](materials/04_agent_basics/2026-07-10-langchain-v1-track-a-mapping.md)
 - [LangGraph 与 Track A 混合 Agent 架构](materials/04_agent_basics/2026-07-10-langgraph-track-a-architecture.md)

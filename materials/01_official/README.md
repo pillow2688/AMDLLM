@@ -26,3 +26,4 @@ YYYY-MM-DD-submission-requirements.md
 ## Current Notes
 
 - [2026-07-10 Track A 官方规则快照](2026-07-10-track-a-official-summary.md)
+- [2026-07-10 Track-A Submission Guidelines 中文翻译与执行清单](2026-07-10-track-a-submission-guidelines-zh.md)

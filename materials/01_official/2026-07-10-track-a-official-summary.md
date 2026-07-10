@@ -1,14 +1,16 @@
 # FPT 2026 Track A 官方规则快照
 
-Status: verified<br>
+Status: public page verified + team-received supplemental guidance<br>
 Owner: team<br>
 Checked: 2026-07-10<br>
-Source: https://fpt2026.uark.edu/fpt26-design-competition/<br>
+Sources: https://fpt2026.uark.edu/fpt26-design-competition/ and [Track-A Submission Guidelines 中文翻译](2026-07-10-track-a-submission-guidelines-zh.md)<br>
 Expires/Risk: high，官网 FAQ 与提交入口尚未发布
 
 ## 文档边界
 
-这份笔记只记录 FPT 2026 Design Competition 官网已经明确的内容，不把 reference harness 的样例费用、样例任务和评分公式写成正式规则。
+这份笔记同时记录 FPT 2026 Design Competition 公开页面和团队于 2026-07-10 收到的 Track-A Submission Guidelines，并在下文区分来源。补充指南目前尚未出现在公开网页，团队需要保留原始通知证据。
+
+reference harness 的样例费用、样例任务和评分公式仍不视为最终正式规则。
 
 ## Track A 定位
 
@@ -47,6 +49,8 @@ Track A 名称为 **Budgeted End-to-End LLM4HLS Agent**。
 - PPA metrics；
 - problem difficulty。
 
+补充提交指南进一步说明 token consumption 是最终评测的重要因素，但尚未公布 token 的上限、统计口径或评分权重。
+
 官网尚未公布 Track A 最终的精确评分公式。因此，reference harness 中的权重、credits 和 acceleration cap 只能用于开发实验。
 
 ## 参赛和平台规则
@@ -66,8 +70,27 @@ Track A 名称为 **Budgeted End-to-End LLM4HLS Agent**。
 - Track A 必须分析 workflow、Agent 运行过程和各阶段 token consumption；
 - preliminary stage 对技术文档和补充材料做双盲评审。
 
+## Track-A 补充提交指南
+
+团队收到的英文通知新增了以下要求：
+
+- co-simulation 目标平台为 Alveo U55C；
+- 目标软件版本为 Vitis 2025.2；
+- `csim`、`synth`、`cosim` 均需通过，并提供实验报告；
+- HLS 生成硬件至少达到 100 MHz，也就是 clock period 不高于 10 ns；
+- token consumption 是最终评价的重要因素；
+- 推荐使用 DeepSeek V4 Pro、Qwen3.5 122B A10B AWQ-4bit、Qwen3.6 27B FP8 评测并报告；
+- 鼓励增加其他公开 open-weight 基础模型或微调版本；
+- 最终评价包含 hidden test benchmarks；
+- 项目预期在 Docker 中构建和运行，建议附 Dockerfile；
+- 最终提交应包含源码、testbench 和有助复现的补充材料，例如 `.zip`；
+- 需要最长 5 分钟的演示视频，展示项目在目标平台实际运行并清晰讲解。
+
+完整翻译、模型核对和提交清单见 [Track-A Submission Guidelines 中文翻译与执行清单](2026-07-10-track-a-submission-guidelines-zh.md)。
+
 ## Final stage
 
+- 提交阶段另需最长 5 分钟的 demonstration video；
 - 15 分钟总时长；
 - 10 分钟口头展示和 live demo；
 - 5 分钟问答；
@@ -91,8 +114,12 @@ Track A 名称为 **Budgeted End-to-End LLM4HLS Agent**。
 - 正式隐藏任务数量与分布；
 - 最终每类工具调用上限或统一 credit 数值；
 - Track A 精确评分公式；
-- 最终提交代码和运行环境的打包格式；
+- token 统计口径、上限和最终评分权重；
+- Docker 中 Vitis 2025.2 与 license 的提供或挂载方式；
+- 最终 `.zip` 目录结构、大小上限和提交入口；
 - 是否会锁定 reference harness 的全部版本与接口；
+- 是否允许通过第三方 API 调用推荐 open-weight 模型；
+- 推荐模型实验的任务范围、重复次数和报告格式；
 - 模型合规要求的最终证明材料形式。
 
 官网联系人：`erie@seu.edu.cn`、`icfpt2026@gmail.com`。
